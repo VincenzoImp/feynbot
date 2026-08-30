@@ -162,23 +162,19 @@ def format_refs(answer, docs):
     unique_ordered = []
     for match in re.finditer(r"\[(\d+)\]", answer):
         ref_num = int(match.group(1))
+        if not 1 <= ref_num <= len(docs):
+            continue
         if ref_num not in unique_ordered:
             unique_ordered.append(ref_num)
 
-    doc_id_map = {}
     new_i = 1
     citations = []
 
     for i in unique_ordered:
         doc = docs[i - 1]
         control_number = doc.metadata.get("control_number")
-
-        if control_number in doc_id_map:
-            doc_id = doc_id_map[control_number]
-        else:
-            doc_id = new_i
-            doc_id_map[control_number] = new_i
-            new_i += 1
+        doc_id = new_i
+        new_i += 1
 
         answer = answer.replace(f"[{i}]", f"[__NEW_REF_ID_{doc_id}]")
 
