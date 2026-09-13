@@ -63,8 +63,7 @@ class InspireOSFullTextSearchTool(BaseTool):
                         getenv("INSPIRE_OPENSEARCH_PASSWORD"),
                     ),
                     "use_ssl": True,
-                    "verify_certs": False,
-                    "ssl_show_warn": False,
+                    "verify_certs": True,
                     "url_prefix": "/os",
                 }
             ],
