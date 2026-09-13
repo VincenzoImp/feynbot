@@ -162,6 +162,8 @@ def format_refs(answer, docs):
     unique_ordered = []
     for match in re.finditer(r"\[(\d+)\]", answer):
         ref_num = int(match.group(1))
+        if not 1 <= ref_num <= len(docs):
+            continue
         if ref_num not in unique_ordered:
             unique_ordered.append(ref_num)
 
