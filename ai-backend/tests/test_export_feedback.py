@@ -1,13 +1,18 @@
+import os
 import unittest
 from datetime import datetime
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 from uuid import UUID
 
-from backend.src.api.v1 import authenticate
-from backend.src.database import get_db
-from backend.src.main import app
-from backend.src.models import SearchFeedback
 from fastapi.testclient import TestClient
+
+with patch.dict(
+    os.environ, {"DATABASE_URL": "sqlite:///:memory:", "LANGFUSE_ENABLED": "false"}
+):
+    from backend.src.api.v1 import authenticate
+    from backend.src.database import get_db
+    from backend.src.main import app
+    from backend.src.models import SearchFeedback
 
 
 class ExportFeedbackTest(unittest.TestCase):
